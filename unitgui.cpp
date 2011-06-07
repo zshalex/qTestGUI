@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 #include <QFile>
+#include <QFileDialog>
 
 UnitGui::UnitGui(QWidget *parent) :
     QDialog(parent),
@@ -17,6 +18,7 @@ UnitGui::UnitGui(QWidget *parent) :
 
     this->connect(ui->btnRun,SIGNAL(clicked()),this,SLOT(runTest()));
     this->connect(this->_process,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(processFinished(int,QProcess::ExitStatus)));
+    this->connect(ui->btnBrowser,SIGNAL(clicked()),this,SLOT(openFile()));
 }
 
 UnitGui::~UnitGui()
@@ -28,7 +30,7 @@ UnitGui::~UnitGui()
 void UnitGui::setFileName(const QString &value)
 {
     _fileName = value;
-    ui->lineEdit->setText(_fileName);
+    ui->edFileName->setText(_fileName);
     runTest();
 }
 
@@ -99,5 +101,11 @@ void UnitGui::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
     ui->btnRun->setEnabled(true);
     ui->btnClear->setEnabled(true);
     setWindowTitle("qTestGUI - Testing has completed");
+}
 
+void UnitGui::openFile()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                tr("Open qTest Program"), "/");
+    setFileName(fileName);
 }
