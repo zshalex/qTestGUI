@@ -1,1 +1,7 @@
 *.pro.user
+*.o
+Makefile
+moc_unitgui.cpp
+ui_unitgui.h
+qTestGUI.app
+qrc_res.cpp
