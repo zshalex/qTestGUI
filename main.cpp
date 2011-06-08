@@ -1,12 +1,10 @@
 #include <QtGui/QApplication>
-#include <QDebug>
-#include <QProcess>
-#include "unitgui.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    UnitGui w;
+    MainWindow w;
     QString program;
     for (int i = 0; i < argc; i++) {
         if (i == 1)

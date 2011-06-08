@@ -11,17 +11,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        unitgui.cpp \
     testcase.cpp \
     testmanager.cpp \
-    testprocess.cpp
+    testprocess.cpp \
+    mainwindow.cpp
 
-HEADERS  += unitgui.h \
-    testcase.h \
+HEADERS  += testcase.h \
     testmanager.h \
-    testprocess.h
+    testprocess.h \
+    mainwindow.h
 
-FORMS    += unitgui.ui
+FORMS    += mainwindow.ui
 
 RESOURCES += \
     res.qrc
