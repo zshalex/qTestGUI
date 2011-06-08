@@ -25,8 +25,6 @@ public:
     void setFileName(const QString &value);
 private slots:
     void runTest();
-    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
-    void openFile();
 private:
     Ui::UnitGui *ui;
 

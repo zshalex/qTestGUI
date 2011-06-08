@@ -13,7 +13,7 @@ public:
     ~TestProcess();
 
     QStringList getFunList();
-    QString getTestResult(const TestManager &testManager);
+    QString getTestResult(TestManager &testManager);
 
     const QString &testFile() {return _testFile;}
 

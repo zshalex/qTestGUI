@@ -27,13 +27,13 @@ QStringList TestProcess::getFunList()
     return result;
 }
 
-QString TestProcess::getTestResult(const TestManager &testManager)
+QString TestProcess::getTestResult(TestManager &testManager)
 {
     QStringList arg;
     QString result;
-    for (int i = 0; i < testManager.length(); i++) {
-        if (testManager.at(i).checked())
-            arg << testManager.at(i).name();
+    for (int i = 0; i < testManager.count(); i++) {
+        if (testManager.testCase(i)->checked())
+            arg << testManager.testCase(i)->name();
     }
     arg << "-xml";
     _process->start(_testFile,arg);

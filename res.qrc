@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>image/succ.bmp</file>
         <file>image/fail.bmp</file>
+        <file>image/normal.bmp</file>
     </qresource>
 </RCC>

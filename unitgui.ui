@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>535</width>
-    <height>385</height>
+    <width>654</width>
+    <height>386</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -24,16 +24,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="edFileName">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnBrowser">
+      <widget class="QLabel" name="labFileName">
        <property name="text">
-        <string>Browser</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -89,13 +82,6 @@
       <widget class="QPushButton" name="btnRun">
        <property name="text">
         <string>Run</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnClear">
-       <property name="text">
-        <string>Clear</string>
        </property>
       </widget>
      </item>

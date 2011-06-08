@@ -1,9 +1,38 @@
 #include "testmanager.h"
 #include <QDebug>
 
-TestManager::TestManager():QList<TestCase>()
+TestManager::TestManager()
 {
 
+}
+
+int TestManager::count() const
+{
+    return _testList.length();
+}
+
+void TestManager::clear()
+{
+    TestManager::TestCaseList::const_iterator itr = _testList.begin();
+    while(itr != _testList.end()) {
+        TestCase *tp = *itr;
+        delete tp;
+    }
+    _testList.clear();
+}
+
+void TestManager::addTestCase(TestCase *testCase)
+{
+    _testList.append(testCase);
+}
+
+TestCase *TestManager::testCase(int index)
+{
+    TestCase *tp = NULL;
+    if (index >= 0 && index < _testList.length()){
+        tp = _testList.at(index);
+    }
+    return tp;
 }
 
 void TestManager::initFromFunctions(const QStringList &funList)
@@ -12,19 +41,19 @@ void TestManager::initFromFunctions(const QStringList &funList)
     clear();
     QString funName;
     for (int i = 0; i < len; i++) {
-        TestCase test;
+        TestCase *test = new TestCase();
         funName = funList.at(i);
         funName.resize(funName.length() - 2);
-        test.setName(funName);
-        append(test);
+        test->setName(funName);
+        addTestCase(test);
     }
 }
 
 const int &TestManager::indexOfByFunName(const QString &fun) const
 {
-    int len = length();
+    int len = count();
     for (int i = 0; i < len; i++) {
-        if (at(i).name() == fun) {
+        if (_testList.at(i)->name() == fun) {
             return i;
         }
     }
@@ -33,6 +62,7 @@ const int &TestManager::indexOfByFunName(const QString &fun) const
 
 void TestManager::setTestResult(const QString &result)
 {
+    qDebug() << result;
     QDomDocument doc;
     doc.setContent(result);
     QDomElement root = doc.documentElement();
@@ -44,16 +74,17 @@ void TestManager::setTestResult(const QString &result)
 
 void TestManager::readFunction(const QDomElement &element)
 {
+    qDebug() << "readFunction";
     QString funName = element.attribute("name");
     int index = indexOfByFunName(funName);
-    qDebug() << "find" << index;
     if (index != -1) {
-        TestCase *test = const_cast<TestCase *>(&at(index));
+        //find test case
+        qDebug() << 'find' << index;
+        TestCase *test = _testList.at(index);
         QDomNode res = element.firstChild();
         if (!res.isNull() && test->checked()) {
             readResult(res.toElement(),test);
         } else {
-//            test.setExecuted(false);
             test->setChecked(false);
         }
     }
