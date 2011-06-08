@@ -51,9 +51,6 @@ QProgressBar::chunk {
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
-        <attribute name="headerVisible">
-         <bool>false</bool>
-        </attribute>
         <column>
          <property name="text">
           <string notr="true">1</string>
@@ -102,9 +99,6 @@ QProgressBar::chunk {
          <property name="showGrid">
           <bool>false</bool>
          </property>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
          <attribute name="verticalHeaderVisible">
           <bool>false</bool>
          </attribute>

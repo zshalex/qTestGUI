@@ -13,7 +13,6 @@ namespace Ui {
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -24,6 +23,8 @@ public slots:
     void runTest();
 private slots:
     void currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous);
+    void runTestFinished(const QString &result);
+    void getFunListFinished(const QStringList &result);
 private:
     void showResult();
 private:

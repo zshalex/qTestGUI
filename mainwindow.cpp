@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->connect(ui->actionRun,SIGNAL(triggered()),this,SLOT(runTest()));
     this->connect(ui->treeWidget,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
+    this->connect(&_process,SIGNAL(testFinished(QString)),this,SLOT(runTestFinished(QString)));
+    this->connect(&_process,SIGNAL(getFunListFinished(QStringList)),this,SLOT(getFunListFinished(QStringList)));
 }
 
 MainWindow::~MainWindow()
@@ -32,49 +34,72 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::getFunList()
-{
-    if (QFile::exists(_process.testFile())) {
-        _testManager.initFromFunctions(_process.getFunList());
-        ui->treeWidget->clear();
-        _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
-        QFileInfo info(_process.testFile());
-        _treeRoot->setText(0,info.fileName());
-        for (int i = 0; i < _testManager.count(); i++) {
-            QTreeWidgetItem *treeItem = new QTreeWidgetItem(_treeRoot);
-            treeItem->setText(0,_testManager.testCase(i)->name());
-            treeItem->setIcon(0,QIcon(":/image/normal.png"));
-            _testManager.testCase(i)->setExecuted(false);
-            if (_testManager.testCase(i)->checked())
-                treeItem->setCheckState(0,Qt::Checked);
-            else
-                treeItem->setCheckState(0,Qt::Unchecked);
-        }
-        _treeRoot->setExpanded(true);
-
-        ui->tableWidget->item(0,0)->setText(QString::number(_testManager.count()));
-    }
-}
-
 void MainWindow::setFileName(const QString &value)
 {
     _process.setTestFile(value);
 }
 
+void MainWindow::getFunList()
+{
+    if (QFile::exists(_process.testFile())) {
+        ui->treeWidget->clear();
+        _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
+        QFileInfo info(_process.testFile());
+        _treeRoot->setText(0,info.fileName());
+        _process.getFunList();
+    }
+}
+
+void MainWindow::getFunListFinished(const QStringList &result)
+{
+    _testManager.initFromFunctions(result);
+    for (int i = 0; i < _testManager.count(); i++) {
+        QTreeWidgetItem *treeItem = new QTreeWidgetItem(_treeRoot);
+        treeItem->setText(0,_testManager.testCase(i)->name());
+        treeItem->setIcon(0,QIcon(":/image/normal.png"));
+        _testManager.testCase(i)->setExecuted(false);
+        if (_testManager.testCase(i)->checked())
+            treeItem->setCheckState(0,Qt::Checked);
+        else
+            treeItem->setCheckState(0,Qt::Unchecked);
+    }
+    _treeRoot->setExpanded(true);
+
+    ui->tableWidget->item(0,0)->setText(QString::number(_testManager.count()));
+}
+
 void MainWindow::runTest()
 {
     if (QFile::exists(_process.testFile())) {
+        if (_testManager.count() == 0)
+            return;
         ui->progressBar->setValue(0);
+        int checkCount = 0;
         for (int i = 0; i < _testManager.count(); i++) {
-            if (_treeRoot->child(i)->checkState(0) == Qt::Checked)
+            if (_treeRoot->child(i)->checkState(0) == Qt::Checked) {
                 _testManager.testCase(i)->setChecked(true);
-            else
+                checkCount++;
+            } else {
                 _testManager.testCase(i)->setChecked(false);
+            }
+            _treeRoot->child(i)->setIcon(0,QIcon(":/image/normal.png"));
         }
-
-        _testManager.setTestResult(_process.getTestResult(_testManager));
-        showResult();
+        if (checkCount > 0) {
+            ui->progressBar->setMaximum(checkCount);
+        } else {
+            ui->progressBar->setMaximum(100);
+            return;
+        }
+        this->statusBar()->showMessage(tr("qTest is running"));
+        _process.runTest(_testManager);
     }
+}
+
+void MainWindow::runTestFinished(const QString &result)
+{
+    _testManager.setTestResult(result);
+    showResult();
+    this->statusBar()->showMessage(tr("qTest has completed"));
 }
 
 void MainWindow::showResult()
@@ -110,7 +135,7 @@ void MainWindow::showResult()
 
 }
 
-void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous)
+void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *)
 {
     if (current != _treeRoot) {
         int index = _testManager.indexOfByFunName(current->text(0));

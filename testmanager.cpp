@@ -1,5 +1,4 @@
 #include "testmanager.h"
-#include <QDebug>
 
 TestManager::TestManager()
 {
@@ -52,17 +51,17 @@ void TestManager::initFromFunctions(const QStringList &funList)
 const int &TestManager::indexOfByFunName(const QString &fun) const
 {
     int len = count();
+    int result = -1;
     for (int i = 0; i < len; i++) {
         if (_testList.at(i)->name() == fun) {
-            return i;
+            result = i;
         }
     }
-    return -1;
+    return result;
 }
 
 void TestManager::setTestResult(const QString &result)
 {
-    qDebug() << result;
     QDomDocument doc;
     doc.setContent(result);
     QDomElement root = doc.documentElement();
@@ -74,12 +73,10 @@ void TestManager::setTestResult(const QString &result)
 
 void TestManager::readFunction(const QDomElement &element)
 {
-    qDebug() << "readFunction";
     QString funName = element.attribute("name");
     int index = indexOfByFunName(funName);
     if (index != -1) {
         //find test case
-        qDebug() << 'find' << index;
         TestCase *test = _testList.at(index);
         QDomNode res = element.firstChild();
         if (!res.isNull() && test->checked()) {
@@ -94,7 +91,6 @@ void TestManager::readResult(const QDomElement &element, TestCase *test)
 {
     QString result = element.attribute("type");
     test->setExecuted(true);
-    qDebug() << result;
     test->setResultStr(result);
     if (result == "pass") {
         test->setResult(true);

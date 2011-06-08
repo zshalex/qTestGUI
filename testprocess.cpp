@@ -1,8 +1,11 @@
 #include "testprocess.h"
+#include <QDebug>
 
-TestProcess::TestProcess():_testFile("")
+TestProcess::TestProcess(QObject *parent):QObject(parent),_testFile(""),
+    _curTask(GetFunList)
 {
     _process = new QProcess();
+    this->connect(_process,SIGNAL(finished(int)),this,SLOT(processFinished(int)));
 }
 
 TestProcess::~TestProcess()
@@ -15,30 +18,44 @@ void TestProcess::setTestFile(const QString &value)
     _testFile = value;
 }
 
-QStringList TestProcess::getFunList()
-{
-    QStringList arg,result;
-    arg << "-functions";
-    _process->start(_testFile,arg);
-    if (_process->waitForFinished()){
-        while(!_process->atEnd())
-            result << QString(_process->readLine()).trimmed();
-    }
-    return result;
-}
-
-QString TestProcess::getTestResult(TestManager &testManager)
+void TestProcess::getFunList()
 {
     QStringList arg;
-    QString result;
+    arg << "-functions";
+    _curTask = GetFunList;
+    _process->start(_testFile,arg);
+}
+
+QStringList TestProcess::getArgs(TestManager &testManager)
+{
+    QStringList arg;
     for (int i = 0; i < testManager.count(); i++) {
         if (testManager.testCase(i)->checked())
             arg << testManager.testCase(i)->name();
     }
     arg << "-xml";
+    return arg;
+}
+
+void TestProcess::runTest(TestManager &testManager)
+{
+    QStringList arg = getArgs(testManager);
+    _curTask = RunTest;
     _process->start(_testFile,arg);
-    if (_process->waitForFinished()){
-        result = _process->readAll();
+}
+
+void TestProcess::processFinished (int exitCode)
+{
+    switch(_curTask) {
+        case GetFunList: {
+            QStringList result;
+            while(!_process->atEnd())
+                result << QString(_process->readLine()).trimmed();
+            emit getFunListFinished(result);
+            break;
+        }
+        case RunTest: {
+            emit testFinished(_process->readAll());
+        }
     }
-    return result;
 }
