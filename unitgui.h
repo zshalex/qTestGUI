@@ -2,7 +2,9 @@
 #define UNITGUI_H
 
 #include <QDialog>
-#include <QProcess>
+#include <QTreeWidgetItem>
+#include "testprocess.h"
+#include "testmanager.h"
 
 namespace Ui {
     class UnitGui;
@@ -16,6 +18,8 @@ public:
     explicit UnitGui(QWidget *parent = 0);
     ~UnitGui();
 
+    void getFunList();
+
     const QString &fileName() const {return _fileName;}
 
     void setFileName(const QString &value);
@@ -28,7 +32,9 @@ private:
 
     QString _fileName;
     QStringList _arguments;
-    QProcess *_process;
+    TestProcess _process;
+    TestManager _testManager;
+    QTreeWidgetItem *treeRoot;
 
     void showResult(QByteArray array);
 };

@@ -41,27 +41,21 @@
    </item>
    <item>
     <widget class="QTreeWidget" name="treeWidget">
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
      <attribute name="headerCascadingSectionResizes">
-      <bool>false</bool>
+      <bool>true</bool>
      </attribute>
      <attribute name="headerDefaultSectionSize">
       <number>150</number>
      </attribute>
-     <attribute name="headerCascadingSectionResizes">
-      <bool>false</bool>
+     <attribute name="headerHighlightSections">
+      <bool>true</bool>
      </attribute>
-     <attribute name="headerDefaultSectionSize">
+     <attribute name="headerMinimumSectionSize">
       <number>150</number>
      </attribute>
      <column>
       <property name="text">
-       <string>TestCase</string>
+       <string>Test Case</string>
       </property>
      </column>
      <column>
@@ -132,22 +126,6 @@
     <hint type="destinationlabel">
      <x>267</x>
      <y>192</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnClear</sender>
-   <signal>clicked()</signal>
-   <receiver>treeWidget</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>407</x>
-     <y>364</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>267</x>
-     <y>190</y>
     </hint>
    </hints>
   </connection>

@@ -4,16 +4,22 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui xml
 
 TARGET = qTestGUI
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        unitgui.cpp
+        unitgui.cpp \
+    testcase.cpp \
+    testmanager.cpp \
+    testprocess.cpp
 
-HEADERS  += unitgui.h
+HEADERS  += unitgui.h \
+    testcase.h \
+    testmanager.h \
+    testprocess.h
 
 FORMS    += unitgui.ui
 
