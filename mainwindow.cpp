@@ -97,8 +97,17 @@ void MainWindow::showResult()
     ui->tableWidget->item(0,1)->setText(QString::number(sucCount + errorCount));
     ui->tableWidget->item(0,2)->setText(QString::number(sucCount));
     ui->tableWidget->item(0,3)->setText(QString::number(errorCount));
+
+    QString qss = "QProgressBar {border: 2px solid grey;border-radius: 5px;text-align: center;}";;
+    if (errorCount != 0) {
+        qss += ("QProgressBar::chunk {background-color: #ff00ff;width: 10px;margin: 0.5px;}");
+    } else {
+        qss += ("QProgressBar::chunk {background-color: #00ff00;width: 10px;margin: 0.5px;}");
+    }
+    ui->progressBar->setStyleSheet(qss);
     ui->progressBar->setMaximum(sucCount + errorCount);
     ui->progressBar->setValue(sucCount);
+
 }
 
 void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous)
@@ -115,7 +124,6 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
             QString errLine = QString().sprintf("Error line number: %d",test->errorLine());
             ui->textEdit->append(errLine);
             ui->textEdit->append(test->errorMessage());
-
         }
     }
 }

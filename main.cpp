@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     }
     w.setFileName(program);
     w.getFunList();
+    w.runTest();
     w.show();
 
     return a.exec();
