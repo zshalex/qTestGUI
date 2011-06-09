@@ -3,6 +3,8 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include <QFileDialog>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(ui->treeWidget,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(&_process,SIGNAL(testFinished(QString)),this,SLOT(runTestFinished(QString)));
     this->connect(&_process,SIGNAL(getFunListFinished(QStringList)),this,SLOT(getFunListFinished(QStringList)));
+    this->connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save()));
+    this->connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open()));
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +47,7 @@ void MainWindow::getFunList()
 {
     if (QFile::exists(_process.testFile())) {
         ui->treeWidget->clear();
+        ui->progressBar->setValue(0);
         _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
         QFileInfo info(_process.testFile());
         _treeRoot->setText(0,info.fileName());
@@ -137,7 +142,7 @@ void MainWindow::showResult()
 
 void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *)
 {
-    if (current != _treeRoot) {
+    if (current != NULL && current != _treeRoot) {
         int index = _testManager.indexOfByFunName(current->text(0));
         if (index == -1)
             return;
@@ -150,5 +155,32 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
             ui->textEdit->append(errLine);
             ui->textEdit->append(test->errorMessage());
         }
+    }
+}
+
+void MainWindow::save()
+{
+    QFileDialog dialog(this);
+    QStringList filename;
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    if (dialog.exec()) {
+        filename = dialog.selectedFiles();
+        if (filename.length() > 0) {
+            _testManager.saveResult(filename.at(0));
+        }
+    }
+}
+
+void MainWindow::open()
+{
+    QFileDialog dialog(this);
+    QStringList filename;
+    dialog.setFileMode(QFileDialog::AnyFile);
+    if (dialog.exec()) {
+         filename = dialog.selectedFiles();
+         if (filename.length() > 0) {
+             this->setFileName(filename.at(0));
+             this->getFunList();
+         }
     }
 }

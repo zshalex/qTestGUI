@@ -25,6 +25,8 @@ private slots:
     void currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous);
     void runTestFinished(const QString &result);
     void getFunListFinished(const QStringList &result);
+    void save();
+    void open();
 private:
     void showResult();
 private:

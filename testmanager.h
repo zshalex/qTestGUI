@@ -21,12 +21,15 @@ public:
     void clear();
     void addTestCase(TestCase *testCase);
     TestCase *testCase(int index);
+    void saveResult(QString filename);
 private:
     void readFunction(const QDomElement &element);
     void readResult(const QDomElement &element, TestCase *test);
     void readErrorMessage(const QDomElement &element, TestCase *test);
 
     TestCaseList _testList;
+    QString _xmlStr;
+    QDomDocument _doc;
 };
 
 #endif // TESTMANAGER_H

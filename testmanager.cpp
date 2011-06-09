@@ -1,4 +1,6 @@
 #include "testmanager.h"
+#include <QFile>
+#include <QTextStream>
 
 TestManager::TestManager()
 {
@@ -16,6 +18,7 @@ void TestManager::clear()
     while(itr != _testList.end()) {
         TestCase *tp = *itr;
         delete tp;
+        itr++;
     }
     _testList.clear();
 }
@@ -62,9 +65,9 @@ const int &TestManager::indexOfByFunName(const QString &fun) const
 
 void TestManager::setTestResult(const QString &result)
 {
-    QDomDocument doc;
-    doc.setContent(result);
-    QDomElement root = doc.documentElement();
+    _xmlStr = result;
+    _doc.setContent(result);
+    QDomElement root = _doc.documentElement();
     QDomNodeList funlist = root.elementsByTagName("TestFunction");
     for (int i = 0; i < funlist.count(); i++) {
         readFunction(funlist.at(i).toElement());
@@ -116,4 +119,13 @@ void TestManager::readErrorMessage(const QDomElement &element, TestCase *test)
         }
         child = child.nextSibling();
     }
+}
+
+void TestManager::saveResult(QString filename)
+{
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+    QTextStream out(&file);
+    out << _doc.toString();
 }
