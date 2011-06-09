@@ -25,3 +25,8 @@ FORMS    += mainwindow.ui
 
 RESOURCES += \
     res.qrc
+
+OTHER_FILES += \
+    app.rc
+#Setting the Application Icon
+RC_FILE = app.rc

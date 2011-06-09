@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/image/app.ico</normaloff>:/image/app.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
     <property name="spacing">
@@ -161,13 +165,61 @@ QProgressBar::chunk {
      <x>0</x>
      <y>0</y>
      <width>657</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile_F">
+    <property name="title">
+     <string>File(&amp;F)</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp_H">
+    <property name="title">
+     <string>Help(&amp;H)</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="actionHome"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbaut"/>
+   </widget>
+   <widget class="QMenu" name="menuTool_T">
+    <property name="title">
+     <string>Tool(&amp;T)</string>
+    </property>
+    <addaction name="actionOption"/>
+   </widget>
+   <widget class="QMenu" name="menuAction_A">
+    <property name="title">
+     <string>Action(&amp;A)</string>
+    </property>
+    <addaction name="actionRun"/>
+   </widget>
+   <widget class="QMenu" name="menuView_V">
+    <property name="title">
+     <string>View(&amp;V)</string>
+    </property>
+    <addaction name="actionExpandAll"/>
+    <addaction name="actionCollapsAll"/>
+   </widget>
+   <addaction name="menuFile_F"/>
+   <addaction name="menuView_V"/>
+   <addaction name="menuAction_A"/>
+   <addaction name="menuTool_T"/>
+   <addaction name="menuHelp_H"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="movable">
     <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -176,6 +228,11 @@ QProgressBar::chunk {
     <bool>false</bool>
    </attribute>
    <addaction name="actionRun"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionOption"/>
+   <addaction name="actionHelp"/>
+   <addaction name="actionHome"/>
+   <addaction name="actionExit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionRun">
@@ -184,10 +241,120 @@ QProgressBar::chunk {
      <normaloff>:/image/run.png</normaloff>:/image/run.png</iconset>
    </property>
    <property name="text">
-    <string>Run</string>
+    <string>Run(&amp;R)</string>
+   </property>
+   <property name="toolTip">
+    <string>Run Test</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/close.png</normaloff>:/image/close.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit(&amp;X)</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/open.png</normaloff>:/image/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open(&amp;O)</string>
+   </property>
+   <property name="toolTip">
+    <string>Open qTest</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/help.png</normaloff>:/image/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Help(&amp;H)</string>
+   </property>
+   <property name="toolTip">
+    <string>Help</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionOption">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/option.png</normaloff>:/image/option.png</iconset>
+   </property>
+   <property name="text">
+    <string>Option(&amp;O)</string>
+   </property>
+   <property name="toolTip">
+    <string>Option</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/home.png</normaloff>:/image/home.png</iconset>
+   </property>
+   <property name="text">
+    <string>Home Page(&amp;M)</string>
+   </property>
+   <property name="toolTip">
+    <string>Home Page</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionAbaut">
+   <property name="text">
+    <string>Abaut(&amp;A)</string>
+   </property>
+   <property name="toolTip">
+    <string>Abaut</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save(&amp;S)</string>
+   </property>
+   <property name="toolTip">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExpandAll">
+   <property name="text">
+    <string>ExpandAll(&amp;E)</string>
+   </property>
+   <property name="toolTip">
+    <string>Expand All</string>
+   </property>
+  </action>
+  <action name="actionCollapsAll">
+   <property name="text">
+    <string>CollapsAll(&amp;C)</string>
+   </property>
+   <property name="toolTip">
+    <string>Collaps All</string>
    </property>
   </action>
  </widget>
@@ -195,5 +362,54 @@ QProgressBar::chunk {
  <resources>
   <include location="res.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>254</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExpandAll</sender>
+   <signal>triggered()</signal>
+   <receiver>treeWidget</receiver>
+   <slot>expandAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCollapsAll</sender>
+   <signal>triggered()</signal>
+   <receiver>treeWidget</receiver>
+   <slot>collapseAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

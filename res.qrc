@@ -4,5 +4,11 @@
         <file>image/normal.png</file>
         <file>image/succ.png</file>
         <file>image/fail.png</file>
+        <file>image/close.png</file>
+        <file>image/help.png</file>
+        <file>image/open.png</file>
+        <file>image/option.png</file>
+        <file>image/home.png</file>
+        <file>image/app.ico</file>
     </qresource>
 </RCC>
