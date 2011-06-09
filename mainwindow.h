@@ -27,6 +27,10 @@ private slots:
     void getFunListFinished(const QStringList &result);
     void save();
     void open();
+    void selectAll();
+    void unselectAll();
+    void selectFail();
+    void selectSuccess();
 private:
     void showResult();
 private:

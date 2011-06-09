@@ -25,12 +25,17 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->tableWidget->setItem(0,i,item);
     }
 
-    this->connect(ui->actionRun,SIGNAL(triggered()),this,SLOT(runTest()));
     this->connect(ui->treeWidget,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     this->connect(&_process,SIGNAL(testFinished(QString)),this,SLOT(runTestFinished(QString)));
     this->connect(&_process,SIGNAL(getFunListFinished(QStringList)),this,SLOT(getFunListFinished(QStringList)));
-    this->connect(ui->actionSave,SIGNAL(triggered()),this,SLOT(save()));
+
+    this->connect(ui->actionRun,SIGNAL(triggered()),this,SLOT(runTest()));
+    this->connect(ui->actionSaveAs,SIGNAL(triggered()),this,SLOT(save()));
     this->connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open()));
+    this->connect(ui->actionSelectFail,SIGNAL(triggered()),this,SLOT(selectFail()));
+    this->connect(ui->actionSelectSuccess,SIGNAL(triggered()),this,SLOT(selectSuccess()));
+    this->connect(ui->actionSelectAll,SIGNAL(triggered()),this,SLOT(selectAll()));
+    this->connect(ui->actionUnselectAll,SIGNAL(triggered()),this,SLOT(unselectAll()));
 }
 
 MainWindow::~MainWindow()
@@ -71,6 +76,7 @@ void MainWindow::getFunListFinished(const QStringList &result)
     _treeRoot->setExpanded(true);
 
     ui->tableWidget->item(0,0)->setText(QString::number(_testManager.count()));
+    ui->statusBar->showMessage(tr("Load TestCase"));
 }
 
 void MainWindow::runTest()
@@ -160,27 +166,73 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
 
 void MainWindow::save()
 {
-    QFileDialog dialog(this);
-    QStringList filename;
-    dialog.setAcceptMode(QFileDialog::AcceptSave);
-    if (dialog.exec()) {
-        filename = dialog.selectedFiles();
-        if (filename.length() > 0) {
-            _testManager.saveResult(filename.at(0));
-        }
-    }
+    QString fileName = QFileDialog::getSaveFileName(this,tr("Save test result"),"",tr("XML File(*.xml)"));
+    _testManager.saveResult(fileName);
 }
 
 void MainWindow::open()
 {
-    QFileDialog dialog(this);
-    QStringList filename;
-    dialog.setFileMode(QFileDialog::AnyFile);
-    if (dialog.exec()) {
-         filename = dialog.selectedFiles();
-         if (filename.length() > 0) {
-             this->setFileName(filename.at(0));
-             this->getFunList();
-         }
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open qTest file"),"",tr("Executable File(*.exe)"));
+    setFileName(fileName);
+    getFunList();
+}
+
+void MainWindow::selectFail()
+{
+    TestCase *test;
+    QTreeWidgetItem *item;
+    for (int i = 0; i < _testManager.count(); i++) {
+        test = _testManager.testCase(i);
+        item = _treeRoot->child(i);
+
+        if (test->result()){
+            test->setChecked(false);
+            item->setCheckState(0,Qt::Unchecked);
+        } else {
+            test->setChecked(true);
+            item->setCheckState(0,Qt::Checked);
+        }
+    }
+}
+
+void MainWindow::selectSuccess()
+{
+    TestCase *test;
+    QTreeWidgetItem *item;
+    for (int i = 0; i < _testManager.count(); i++) {
+        test = _testManager.testCase(i);
+        item = _treeRoot->child(i);
+
+        if (test->result()){
+            test->setChecked(true);
+            item->setCheckState(0,Qt::Checked);
+        } else {
+            test->setChecked(false);
+            item->setCheckState(0,Qt::Unchecked);
+        }
+    }
+}
+
+void MainWindow::selectAll()
+{
+    TestCase *test;
+    QTreeWidgetItem *item;
+    for (int i = 0; i < _testManager.count(); i++) {
+        test = _testManager.testCase(i);
+        item = _treeRoot->child(i);
+        test->setChecked(true);
+        item->setCheckState(0,Qt::Checked);
+    }
+}
+
+void MainWindow::unselectAll()
+{
+    TestCase *test;
+    QTreeWidgetItem *item;
+    for (int i = 0; i < _testManager.count(); i++) {
+        test = _testManager.testCase(i);
+        item = _treeRoot->child(i);
+        test->setChecked(false);
+        item->setCheckState(0,Qt::Unchecked);
     }
 }
