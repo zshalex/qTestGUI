@@ -27,6 +27,7 @@ public slots:
     void unselectAll();
     void selectFail();
     void selectSuccess();
+    void option();
 private slots:
     void currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous);
     void runTestFinished(const QString &result);

@@ -6,6 +6,8 @@
 #include <QFileDialog>
 #include <QDebug>
 
+#include "optiondialog.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -37,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(ui->actionSelectSuccess,SIGNAL(triggered()),this,SLOT(selectSuccess()));
     this->connect(ui->actionSelectAll,SIGNAL(triggered()),this,SLOT(selectAll()));
     this->connect(ui->actionUnselectAll,SIGNAL(triggered()),this,SLOT(unselectAll()));
+    this->connect(ui->actionOption,SIGNAL(triggered()),this,SLOT(option()));
 }
 
 MainWindow::~MainWindow()
@@ -240,4 +243,10 @@ void MainWindow::unselectAll()
         test->setChecked(false);
         item->setCheckState(0,Qt::Unchecked);
     }
+}
+
+void MainWindow::option()
+{
+    OptionDialog dialog;
+    dialog.exec();
 }

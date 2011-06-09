@@ -14,14 +14,17 @@ SOURCES += main.cpp\
     testcase.cpp \
     testmanager.cpp \
     testprocess.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    optiondialog.cpp
 
 HEADERS  += testcase.h \
     testmanager.h \
     testprocess.h \
-    mainwindow.h
+    mainwindow.h \
+    optiondialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    optiondialog.ui
 
 RESOURCES += \
     res.qrc
