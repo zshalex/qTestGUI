@@ -17,6 +17,9 @@
    <iconset resource="res.qrc">
     <normaloff>:/image/app.ico</normaloff>:/image/app.ico</iconset>
   </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
     <property name="spacing">
@@ -165,7 +168,7 @@ QProgressBar::chunk {
      <x>0</x>
      <y>0</y>
      <width>657</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -197,6 +200,7 @@ QProgressBar::chunk {
      <string>Action(&amp;A)</string>
     </property>
     <addaction name="actionRun"/>
+    <addaction name="actionLoadFunction"/>
    </widget>
    <widget class="QMenu" name="menuView_V">
     <property name="title">
@@ -399,10 +403,10 @@ QProgressBar::chunk {
   </action>
   <action name="actionExpandAll">
    <property name="text">
-    <string>ExpandAll(&amp;E)</string>
+    <string>Expand All(&amp;E)</string>
    </property>
    <property name="iconText">
-    <string>ExpandAll</string>
+    <string>Expand All</string>
    </property>
    <property name="toolTip">
     <string>Expand All</string>
@@ -413,7 +417,7 @@ QProgressBar::chunk {
   </action>
   <action name="actionCollapsAll">
    <property name="text">
-    <string>CollapsAll(&amp;C)</string>
+    <string>Collaps All(&amp;C)</string>
    </property>
    <property name="iconText">
     <string>Collaps All</string>
@@ -479,6 +483,20 @@ QProgressBar::chunk {
    </property>
    <property name="statusTip">
     <string>Unselect All</string>
+   </property>
+  </action>
+  <action name="actionLoadFunction">
+   <property name="text">
+    <string>Load Function(&amp;F)</string>
+   </property>
+   <property name="iconText">
+    <string>Load Function</string>
+   </property>
+   <property name="toolTip">
+    <string>Load Function</string>
+   </property>
+   <property name="statusTip">
+    <string>Load Function</string>
    </property>
   </action>
  </widget>

@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(&_process,SIGNAL(getFunListFinished(QStringList)),this,SLOT(getFunListFinished(QStringList)));
 
     this->connect(ui->actionRun,SIGNAL(triggered()),this,SLOT(runTest()));
+    this->connect(ui->actionLoadFunction,SIGNAL(triggered()),this,SLOT(getFunList()));
     this->connect(ui->actionSaveAs,SIGNAL(triggered()),this,SLOT(save()));
     this->connect(ui->actionOpen,SIGNAL(triggered()),this,SLOT(open()));
     this->connect(ui->actionSelectFail,SIGNAL(triggered()),this,SLOT(selectFail()));
@@ -167,14 +168,18 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
 void MainWindow::save()
 {
     QString fileName = QFileDialog::getSaveFileName(this,tr("Save test result"),"",tr("XML File(*.xml)"));
-    _testManager.saveResult(fileName);
+    if (!fileName.isEmpty()) {
+        _testManager.saveResult(fileName);
+    }
 }
 
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open qTest file"),"",tr("Executable File(*.exe)"));
-    setFileName(fileName);
-    getFunList();
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open qTest file"),"",tr("Executable File(*.*)"));
+    if (!fileName.isEmpty()) {
+        setFileName(fileName);
+        getFunList();
+    }
 }
 
 void MainWindow::selectFail()

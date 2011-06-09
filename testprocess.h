@@ -19,8 +19,8 @@ public:
     explicit TestProcess(QObject *parent = 0);
     ~TestProcess();
 
-    void getFunList();
-    void runTest(TestManager &testManager);
+    bool getFunList();
+    bool runTest(TestManager &testManager);
 
     const QString &testFile() {return _testFile;}
 

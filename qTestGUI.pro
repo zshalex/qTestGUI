@@ -25,8 +25,12 @@ FORMS    += mainwindow.ui
 
 RESOURCES += \
     res.qrc
-
-OTHER_FILES += \
-    app.rc
-#Setting the Application Icon
-RC_FILE = app.rc
+win32 {
+    OTHER_FILES += \
+        app.rc
+    #Setting the Application Icon
+    RC_FILE = app.rc
+}
+macx{
+    ICON = ./image/app.icns
+}

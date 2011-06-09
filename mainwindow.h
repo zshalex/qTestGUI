@@ -17,20 +17,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void getFunList();
     void setFileName(const QString &value);
 public slots:
+    void getFunList();
     void runTest();
-private slots:
-    void currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous);
-    void runTestFinished(const QString &result);
-    void getFunListFinished(const QStringList &result);
     void save();
     void open();
     void selectAll();
     void unselectAll();
     void selectFail();
     void selectSuccess();
+private slots:
+    void currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous);
+    void runTestFinished(const QString &result);
+    void getFunListFinished(const QStringList &result);
 private:
     void showResult();
 private:

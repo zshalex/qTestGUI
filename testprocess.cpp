@@ -18,12 +18,17 @@ void TestProcess::setTestFile(const QString &value)
     _testFile = value;
 }
 
-void TestProcess::getFunList()
+bool TestProcess::getFunList()
 {
-    QStringList arg;
-    arg << "-functions";
-    _curTask = GetFunList;
-    _process->start(_testFile,arg);
+    if (_process->state() == QProcess::NotRunning) {
+        QStringList arg;
+        arg << "-functions";
+        _curTask = GetFunList;
+        _process->start(_testFile,arg);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 QStringList TestProcess::getArgs(TestManager &testManager)
@@ -37,11 +42,16 @@ QStringList TestProcess::getArgs(TestManager &testManager)
     return arg;
 }
 
-void TestProcess::runTest(TestManager &testManager)
+bool TestProcess::runTest(TestManager &testManager)
 {
-    QStringList arg = getArgs(testManager);
-    _curTask = RunTest;
-    _process->start(_testFile,arg);
+    if (_process->state() == QProcess::NotRunning) {
+        QStringList arg = getArgs(testManager);
+        _curTask = RunTest;
+        _process->start(_testFile,arg);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void TestProcess::processFinished (int exitCode)
