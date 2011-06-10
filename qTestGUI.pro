@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     testprocess.cpp \
     mainwindow.cpp \
     optiondialog.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    config.cpp
 
 HEADERS  += testcase.h \
     testmanager.h \
     testprocess.h \
     mainwindow.h \
     optiondialog.h \
-    aboutdialog.h
+    aboutdialog.h \
+    config.h
 
 FORMS    += mainwindow.ui \
     optiondialog.ui \

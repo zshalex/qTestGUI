@@ -168,7 +168,7 @@ QProgressBar::chunk {
      <x>0</x>
      <y>0</y>
      <width>657</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -239,9 +239,9 @@ QProgressBar::chunk {
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionLoadFunction"/>
    <addaction name="actionRun"/>
    <addaction name="actionOpen"/>
-   <addaction name="actionOption"/>
    <addaction name="actionHelp"/>
    <addaction name="actionHome"/>
    <addaction name="actionExit"/>
@@ -332,10 +332,6 @@ QProgressBar::chunk {
    </property>
   </action>
   <action name="actionOption">
-   <property name="icon">
-    <iconset resource="res.qrc">
-     <normaloff>:/image/option.png</normaloff>:/image/option.png</iconset>
-   </property>
    <property name="text">
     <string>Option(&amp;O)...</string>
    </property>
@@ -486,11 +482,15 @@ QProgressBar::chunk {
    </property>
   </action>
   <action name="actionLoadFunction">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/image/option.png</normaloff>:/image/option.png</iconset>
+   </property>
    <property name="text">
-    <string>Load Function(&amp;F)</string>
+    <string>Load(&amp;L)</string>
    </property>
    <property name="iconText">
-    <string>Load Function</string>
+    <string>Load</string>
    </property>
    <property name="toolTip">
     <string>Load Function</string>

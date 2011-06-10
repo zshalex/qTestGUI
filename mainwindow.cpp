@@ -49,25 +49,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setFileName(const QString &value)
+void MainWindow::setConfig(Config *value)
 {
-    _process.setTestFile(value);
+    _config = value;
+    if (_config != NULL) {
+        changeTestFile(_config->testFile());
+    }
 }
 
 void MainWindow::getFunList()
 {
     if (QFile::exists(_process.testFile())) {
-        ui->treeWidget->clear();
-        ui->progressBar->setValue(0);
-        _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
-        QFileInfo info(_process.testFile());
-        _treeRoot->setText(0,info.fileName());
-        _process.getFunList();
+        if (_treeRoot != NULL) {
+            clearTestCase();
+            ui->progressBar->setValue(0);
+            _process.getFunList();
+        }
     }
 }
 
 void MainWindow::getFunListFinished(const QStringList &result)
 {
+    if (_treeRoot == NULL)
+        return;
+
     _testManager.initFromFunctions(result);
     for (int i = 0; i < _testManager.count(); i++) {
         QTreeWidgetItem *treeItem = new QTreeWidgetItem(_treeRoot);
@@ -81,8 +86,13 @@ void MainWindow::getFunListFinished(const QStringList &result)
     }
     _treeRoot->setExpanded(true);
 
+    clearTestInfo();
     ui->tableWidget->item(0,0)->setText(QString::number(_testManager.count()));
     ui->statusBar->showMessage(tr("Load TestCase"));
+
+    if (_config->autoRun()) {
+        runTest();
+    }
 }
 
 void MainWindow::runTest()
@@ -93,6 +103,7 @@ void MainWindow::runTest()
         ui->progressBar->setValue(0);
         int checkCount = 0;
         for (int i = 0; i < _testManager.count(); i++) {
+            _testManager.testCase(i)->setExecuted(false);
             if (_treeRoot->child(i)->checkState(0) == Qt::Checked) {
                 _testManager.testCase(i)->setChecked(true);
                 checkCount++;
@@ -121,6 +132,9 @@ void MainWindow::runTestFinished(const QString &result)
 
 void MainWindow::showResult()
 {
+    if (_treeRoot == NULL)
+        return;
+
     int sucCount = 0;
     int errorCount = 0;
     for (int i = 0; i < _testManager.count(); i++) {
@@ -149,7 +163,6 @@ void MainWindow::showResult()
     ui->progressBar->setStyleSheet(qss);
     ui->progressBar->setMaximum(sucCount + errorCount);
     ui->progressBar->setValue(sucCount);
-
 }
 
 void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *)
@@ -182,13 +195,15 @@ void MainWindow::open()
 {
     QString fileName = QFileDialog::getOpenFileName(this,tr("Open qTest file"),"",tr("Executable File(*.*)"));
     if (!fileName.isEmpty()) {
-        setFileName(fileName);
-        getFunList();
+        changeTestFile(fileName);
     }
 }
 
 void MainWindow::selectFail()
 {
+    if (_treeRoot == NULL)
+        return;
+
     TestCase *test;
     QTreeWidgetItem *item;
     for (int i = 0; i < _testManager.count(); i++) {
@@ -207,6 +222,9 @@ void MainWindow::selectFail()
 
 void MainWindow::selectSuccess()
 {
+    if (_treeRoot == NULL)
+        return;
+
     TestCase *test;
     QTreeWidgetItem *item;
     for (int i = 0; i < _testManager.count(); i++) {
@@ -225,6 +243,9 @@ void MainWindow::selectSuccess()
 
 void MainWindow::selectAll()
 {
+    if (_treeRoot == NULL)
+        return;
+
     TestCase *test;
     QTreeWidgetItem *item;
     for (int i = 0; i < _testManager.count(); i++) {
@@ -237,6 +258,9 @@ void MainWindow::selectAll()
 
 void MainWindow::unselectAll()
 {
+    if (_treeRoot == NULL)
+        return;
+
     TestCase *test;
     QTreeWidgetItem *item;
     for (int i = 0; i < _testManager.count(); i++) {
@@ -257,4 +281,33 @@ void MainWindow::about()
 {
     AboutDialog dialog;
     dialog.exec();
+}
+
+void MainWindow::clearTestCase()
+{
+    if (_treeRoot != NULL) {
+        while(_treeRoot->childCount() > 0) {
+            _treeRoot->removeChild(_treeRoot->child(0));
+        }
+    }
+}
+
+void MainWindow::clearTestInfo()
+{
+    for(int i = 0; i < ui->tableWidget->columnCount(); i++){
+        ui->tableWidget->item(0,i)->setText("");
+    }
+}
+
+void MainWindow::changeTestFile(const QString &value)
+{
+    _process.setTestFile(value);
+    ui->treeWidget->clear();
+    _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
+    QFileInfo info(_process.testFile());
+    _treeRoot->setText(0,info.fileName());
+    clearTestInfo();
+    if (_config->autoLoad()) {
+        getFunList();
+    }
 }

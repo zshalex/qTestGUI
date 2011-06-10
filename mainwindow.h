@@ -3,8 +3,10 @@
 
 #include <QMainWindow>
 #include <QTreeWidgetItem>
+
 #include "testprocess.h"
 #include "testmanager.h"
+#include "config.h"
 
 namespace Ui {
     class MainWindow;
@@ -17,7 +19,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void setFileName(const QString &value);
+    void setConfig(Config *value);
 public slots:
     void getFunList();
     void runTest();
@@ -35,11 +37,15 @@ private slots:
     void getFunListFinished(const QStringList &result);
 private:
     void showResult();
+    void clearTestCase();
+    void clearTestInfo();
+    void changeTestFile(const QString &value);
 private:
     Ui::MainWindow *ui;
     TestProcess _process;
     TestManager _testManager;
     QTreeWidgetItem *_treeRoot;
+    Config *_config;
 };
 
 #endif // MAINWINDOW_H
