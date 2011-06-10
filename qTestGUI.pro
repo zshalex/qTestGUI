@@ -15,16 +15,19 @@ SOURCES += main.cpp\
     testmanager.cpp \
     testprocess.cpp \
     mainwindow.cpp \
-    optiondialog.cpp
+    optiondialog.cpp \
+    aboutdialog.cpp
 
 HEADERS  += testcase.h \
     testmanager.h \
     testprocess.h \
     mainwindow.h \
-    optiondialog.h
+    optiondialog.h \
+    aboutdialog.h
 
 FORMS    += mainwindow.ui \
-    optiondialog.ui
+    optiondialog.ui \
+    aboutdialog.ui
 
 RESOURCES += \
     res.qrc

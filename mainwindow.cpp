@@ -7,6 +7,7 @@
 #include <QDebug>
 
 #include "optiondialog.h"
+#include "aboutdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(ui->actionSelectAll,SIGNAL(triggered()),this,SLOT(selectAll()));
     this->connect(ui->actionUnselectAll,SIGNAL(triggered()),this,SLOT(unselectAll()));
     this->connect(ui->actionOption,SIGNAL(triggered()),this,SLOT(option()));
+    this->connect(ui->actionAbaut,SIGNAL(triggered()),this,SLOT(about()));
 }
 
 MainWindow::~MainWindow()
@@ -248,5 +250,11 @@ void MainWindow::unselectAll()
 void MainWindow::option()
 {
     OptionDialog dialog;
+    dialog.exec();
+}
+
+void MainWindow::about()
+{
+    AboutDialog dialog;
     dialog.exec();
 }
