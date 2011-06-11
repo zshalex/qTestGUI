@@ -4,20 +4,12 @@
 #include <QString>
 #include <getopt.h>
 
-static const char *optString = "t:rRlL";
-
-static const struct option longOpts[] = {
-    { "test", required_argument, NULL, 't' },
-    { "autoRun", no_argument, NULL, 'r' },
-    { "notAutoRun", no_argument, NULL, 'R' },
-    { "autoLoad", no_argument, NULL, 'l' },
-    { "notAutoLoad", no_argument, NULL, 'L'},
-    { NULL, no_argument, NULL, 0 }
-};
-
 class Config
 {
 public:
+    static const char *optString;
+    static const struct option longOpts[];
+
     Config();
 
     void loadFromFile(const QString fileName);

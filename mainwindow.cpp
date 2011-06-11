@@ -311,3 +311,9 @@ void MainWindow::changeTestFile(const QString &value)
         getFunList();
     }
 }
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QMainWindow::closeEvent(event);
+    _config->saveToFile("./config.xml");
+}

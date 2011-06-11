@@ -40,6 +40,7 @@ private:
     void clearTestCase();
     void clearTestInfo();
     void changeTestFile(const QString &value);
+    void closeEvent(QCloseEvent *event);
 private:
     Ui::MainWindow *ui;
     TestProcess _process;
