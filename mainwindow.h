@@ -31,6 +31,8 @@ public slots:
     void selectSuccess();
     void option();
     void about();
+    void autoRun(const bool &value);
+    void autoLoad(const bool &value);
 private slots:
     void currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem * previous);
     void runTestFinished(const QString &result);

@@ -40,8 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(ui->actionSelectSuccess,SIGNAL(triggered()),this,SLOT(selectSuccess()));
     this->connect(ui->actionSelectAll,SIGNAL(triggered()),this,SLOT(selectAll()));
     this->connect(ui->actionUnselectAll,SIGNAL(triggered()),this,SLOT(unselectAll()));
-    this->connect(ui->actionOption,SIGNAL(triggered()),this,SLOT(option()));
+//    this->connect(ui->actionOption,SIGNAL(triggered()),this,SLOT(option()));
     this->connect(ui->actionAbaut,SIGNAL(triggered()),this,SLOT(about()));
+    this->connect(ui->actionAutoLoad,SIGNAL(triggered(bool)),this,SLOT(autoLoad(bool)));
+    this->connect(ui->actionAutoRun,SIGNAL(triggered(bool)),this,SLOT(autoRun(bool)));
 }
 
 MainWindow::~MainWindow()
@@ -54,6 +56,8 @@ void MainWindow::setConfig(Config *value)
     _config = value;
     if (_config != NULL) {
         changeTestFile(_config->testFile());
+        ui->actionAutoLoad->setChecked(_config->autoLoad());
+        ui->actionAutoRun->setChecked(_config->autoRun());
     }
 }
 
@@ -316,4 +320,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     QMainWindow::closeEvent(event);
     _config->saveToFile("./config.xml");
+}
+
+void MainWindow::autoRun(const bool &value)
+{
+    _config->setAutoRun(value);
+}
+
+void MainWindow::autoLoad(const bool &value)
+{
+    _config->setAutoLoad(value);
 }

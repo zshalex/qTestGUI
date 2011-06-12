@@ -193,7 +193,8 @@ QProgressBar::chunk {
     <property name="title">
      <string>Tool(&amp;T)</string>
     </property>
-    <addaction name="actionOption"/>
+    <addaction name="actionAutoRun"/>
+    <addaction name="actionAutoLoad"/>
    </widget>
    <widget class="QMenu" name="menuAction_A">
     <property name="title">
@@ -497,6 +498,40 @@ QProgressBar::chunk {
    </property>
    <property name="statusTip">
     <string>Load Function</string>
+   </property>
+  </action>
+  <action name="actionAutoRun">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto Run(&amp;R)</string>
+   </property>
+   <property name="iconText">
+    <string>Auto Run</string>
+   </property>
+   <property name="toolTip">
+    <string>Auto Run</string>
+   </property>
+   <property name="statusTip">
+    <string>Auto Run</string>
+   </property>
+  </action>
+  <action name="actionAutoLoad">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto Load(&amp;L)</string>
+   </property>
+   <property name="iconText">
+    <string>Auto Load</string>
+   </property>
+   <property name="toolTip">
+    <string>Auto Load</string>
+   </property>
+   <property name="statusTip">
+    <string>Auto Load</string>
    </property>
   </action>
  </widget>
