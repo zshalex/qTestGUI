@@ -243,9 +243,6 @@ QProgressBar::chunk {
    <addaction name="actionLoadFunction"/>
    <addaction name="actionRun"/>
    <addaction name="actionOpen"/>
-   <addaction name="actionHelp"/>
-   <addaction name="actionHome"/>
-   <addaction name="actionExit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionRun">
