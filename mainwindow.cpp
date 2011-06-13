@@ -307,12 +307,14 @@ void MainWindow::changeTestFile(const QString &value)
 {
     _process.setTestFile(value);
     ui->treeWidget->clear();
-    _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
-    QFileInfo info(_process.testFile());
-    _treeRoot->setText(0,info.fileName());
-    clearTestInfo();
-    if (_config->autoLoad()) {
-        getFunList();
+    if (!_process.testFile().isEmpty()) {
+        _treeRoot = new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
+        QFileInfo info(_process.testFile());
+        _treeRoot->setText(0,info.fileName());
+        clearTestInfo();
+        if (_config->autoLoad()) {
+            getFunList();
+        }
     }
 }
 
