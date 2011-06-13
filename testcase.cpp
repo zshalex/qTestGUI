@@ -44,3 +44,8 @@ void TestCase::setChecked(const bool &value)
 {
     _checked = value;
 }
+
+void TestCase::setMessage(const QString &value)
+{
+    _message = value;
+}

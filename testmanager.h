@@ -26,6 +26,7 @@ private:
     void readFunction(const QDomElement &element);
     void readResult(const QDomElement &element, TestCase *test);
     void readErrorMessage(const QDomElement &element, TestCase *test);
+    void readMessage(const QDomElement &element, TestCase *test);
 
     TestCaseList _testList;
     QString _xmlStr;

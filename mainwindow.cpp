@@ -4,7 +4,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QFileDialog>
-#include <QDebug>
 
 #include "optiondialog.h"
 #include "aboutdialog.h"
@@ -177,12 +176,16 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
             return;
         TestCase *test = _testManager.testCase(index);
         ui->textEdit->clear();
-        if (test->checked() && !test->result() && test->executed()) {
-            QString errFile = QString().sprintf("Source File: %s",test->errorFile().toAscii().data());
-            ui->textEdit->append(errFile);
-            QString errLine = QString().sprintf("Error line number: %d",test->errorLine());
-            ui->textEdit->append(errLine);
-            ui->textEdit->append(test->errorMessage());
+        if (test->checked() && test->executed()) {
+            if (!test->result()){
+                QString errFile = QString().sprintf("Source File: %s",test->errorFile().toAscii().data());
+                ui->textEdit->append(errFile);
+                QString errLine = QString().sprintf("Error line number: %d",test->errorLine());
+                ui->textEdit->append(errLine);
+                ui->textEdit->append(test->errorMessage());
+            } else {
+                ui->textEdit->setText(test->message());
+            }
         }
     }
 }
@@ -321,7 +324,7 @@ void MainWindow::changeTestFile(const QString &value)
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     QMainWindow::closeEvent(event);
-    _config->saveToFile("./config.xml");
+    _config->saveToFile(_config->appPath() + "/config.xml");
 }
 
 void MainWindow::autoRun(const bool &value)

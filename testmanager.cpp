@@ -1,6 +1,7 @@
 #include "testmanager.h"
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 
 TestManager::TestManager()
 {
@@ -81,12 +82,31 @@ void TestManager::readFunction(const QDomElement &element)
     if (index != -1) {
         //find test case
         TestCase *test = _testList.at(index);
+
         QDomNode res = element.firstChild();
-        if (!res.isNull() && test->checked()) {
-            readResult(res.toElement(),test);
-        } else {
-            test->setChecked(false);
+        while (!res.isNull()) {
+            if (test->checked()) {
+                if (res.nodeName() == "Incident")
+                    readResult(res.toElement(),test);
+                else if (res.nodeName() == "Message")
+                    readMessage(res.toElement(),test);
+            } else {
+                test->setChecked(false);
+            }
+            res = res.nextSibling();
         }
+    }
+}
+
+void TestManager::readMessage(const QDomElement &element, TestCase *test)
+{
+    QDomNode child = element.firstChild();
+    while (!child.isNull()) {
+        if (child.nodeName() == "Description") {
+            test->setMessage(child.toElement().firstChild().toCDATASection().data());
+            break;
+        }
+        child = child.nextSibling();
     }
 }
 

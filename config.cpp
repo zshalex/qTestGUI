@@ -119,5 +119,8 @@ void Config::saveToFile(const QString fileName)
         autoLoad.setAttribute("value","false");
     root.appendChild(autoLoad);
 
+    QDomProcessingInstruction test = doc.createProcessingInstruction("test","test");
+    doc.insertBefore(test,root);
+
     doc.save(out,4);
 }
