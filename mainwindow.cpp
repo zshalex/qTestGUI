@@ -183,8 +183,16 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
                 QString errLine = QString().sprintf("Error line number: %d",test->errorLine());
                 ui->textEdit->append(errLine);
                 ui->textEdit->append(test->errorMessage());
-            } else {
-                ui->textEdit->setText(test->message());
+
+            }
+            if (test->message().count() > 0) {
+                ui->textEdit->append("");
+                ui->textEdit->append("---------- message ----------");
+                ui->textEdit->append("");
+            }
+
+            for (int i = 0; i < test->message().count(); i++) {
+                ui->textEdit->append(test->message().at(i));
             }
         }
     }

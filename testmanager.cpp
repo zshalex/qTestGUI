@@ -103,7 +103,8 @@ void TestManager::readMessage(const QDomElement &element, TestCase *test)
     QDomNode child = element.firstChild();
     while (!child.isNull()) {
         if (child.nodeName() == "Description") {
-            test->setMessage(child.toElement().firstChild().toCDATASection().data());
+            test->message() << element.attribute("type") + " : "
+                               + child.toElement().firstChild().toCDATASection().data();
             break;
         }
         child = child.nextSibling();

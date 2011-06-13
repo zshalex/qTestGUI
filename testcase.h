@@ -2,6 +2,7 @@
 #define TESTCASE_H
 
 #include <QString>
+#include <QStringList>
 
 class TestCase
 {
@@ -16,7 +17,7 @@ public:
     const QString &errorFile() const {return _errorFile;}
     const bool &executed() const {return _executed;}
     const bool &checked() const {return _checked;}
-    const QString &message() const {return _message;}
+    QStringList &message() {return _message;}
 
     void setName(const QString &value);
     void setResultStr(const QString &value);
@@ -26,7 +27,6 @@ public:
     void setErrorFile(const QString &value);
     void setExecuted(const bool &value);
     void setChecked(const bool &value);
-    void setMessage(const QString &value);
 private:
     QString _name;
     QString _resultStr;
@@ -36,7 +36,7 @@ private:
     QString _errorFile;
     bool _executed;
     bool _checked;
-    QString _message;
+    QStringList _message;
 };
 
 #endif // TESTCASE_H
