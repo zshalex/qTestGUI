@@ -178,6 +178,7 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
         ui->textEdit->clear();
         if (test->checked() && test->executed()) {
             if (!test->result()){
+                ui->textEdit->append("---------- error message ----------");
                 QString errFile = QString().sprintf("Source File: %s",test->errorFile().toAscii().data());
                 ui->textEdit->append(errFile);
                 QString errLine = QString().sprintf("Error line number: %d",test->errorLine());
@@ -186,9 +187,7 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
 
             }
             if (test->message().count() > 0) {
-                ui->textEdit->append("");
                 ui->textEdit->append("---------- message ----------");
-                ui->textEdit->append("");
             }
 
             for (int i = 0; i < test->message().count(); i++) {
