@@ -38,6 +38,7 @@ QStringList TestProcess::getArgs(TestManager &testManager)
         if (testManager.testCase(i)->checked())
             arg << testManager.testCase(i)->name();
         testManager.testCase(i)->message().clear();
+        testManager.testCase(i)->benchmark().clear();
     }
     arg << "-xml";
     return arg;

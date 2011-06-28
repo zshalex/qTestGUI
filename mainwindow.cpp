@@ -188,10 +188,17 @@ void MainWindow::currentItemChanged(QTreeWidgetItem * current, QTreeWidgetItem *
             }
             if (test->message().count() > 0) {
                 ui->textEdit->append("---------- message ----------");
+                for (int i = 0; i < test->message().count(); i++) {
+                    ui->textEdit->append(test->message().at(i));
+                }
             }
 
-            for (int i = 0; i < test->message().count(); i++) {
-                ui->textEdit->append(test->message().at(i));
+
+            if (test->benchmark().count() > 0) {
+                ui->textEdit->append("---------- benchmark ----------");
+                for (int i = 0; i < test->benchmark().count(); i++) {
+                    ui->textEdit->append(test->benchmark().at(i));
+                }
             }
         }
     }

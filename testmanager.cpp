@@ -90,6 +90,8 @@ void TestManager::readFunction(const QDomElement &element)
                     readResult(res.toElement(),test);
                 else if (res.nodeName() == "Message")
                     readMessage(res.toElement(),test);
+                else if (res.nodeName() == "BenchmarkResult")
+                    readBenchmark(res.toElement(),test);
             } else {
                 test->setChecked(false);
             }
@@ -140,6 +142,17 @@ void TestManager::readErrorMessage(const QDomElement &element, TestCase *test)
         }
         child = child.nextSibling();
     }
+}
+
+void TestManager::readBenchmark(const QDomElement &element, TestCase *test)
+{
+    double total;
+    int iter;
+    total = element.attribute("value","0").toDouble();
+    iter = element.attribute("iterations","1").toInt();
+    QString msg;
+    msg.sprintf("Benchmark : %f msec per iteration (total: %f, iterations: %d)",total / iter, total, iter);
+    test->benchmark() << msg;
 }
 
 void TestManager::saveResult(QString filename)

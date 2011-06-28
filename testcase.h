@@ -18,6 +18,7 @@ public:
     const bool &executed() const {return _executed;}
     const bool &checked() const {return _checked;}
     QStringList &message() {return _message;}
+    QStringList &benchmark() {return _benchmark;}
 
     void setName(const QString &value);
     void setResultStr(const QString &value);
@@ -37,6 +38,7 @@ private:
     bool _executed;
     bool _checked;
     QStringList _message;
+    QStringList _benchmark;
 };
 
 #endif // TESTCASE_H
