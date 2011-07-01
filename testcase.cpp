@@ -1,5 +1,8 @@
 #include "testcase.h"
 
+const QString TestCase::INIT_TEST_CASE = "initTestCase";
+const QString TestCase::CLEAN_TEST_CASE = "cleanupTestCase";
+
 TestCase::TestCase():_name(""),_result(false),
     _errorMessage(""),_errorLine(0),_errorFile(""),_executed(false),_checked(true)
 {
@@ -43,4 +46,13 @@ void TestCase::setExecuted(const bool &value)
 void TestCase::setChecked(const bool &value)
 {
     _checked = value;
+}
+
+bool TestCase::isInitOrClean()
+{
+    if (_name == TestCase::INIT_TEST_CASE or
+        _name == TestCase::CLEAN_TEST_CASE)
+        return true;
+    else
+        return false;
 }

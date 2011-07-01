@@ -43,13 +43,27 @@ void TestManager::initFromFunctions(const QStringList &funList)
     int len = funList.length();
     clear();
     QString funName;
+    TestCase *test ;
+
+    test = new TestCase();
+    funName = "initTestCase";
+    test->setName(funName);
+    test->setChecked(true);
+    addTestCase(test);
+
     for (int i = 0; i < len; i++) {
-        TestCase *test = new TestCase();
+        test = new TestCase();
         funName = funList.at(i);
         funName.resize(funName.length() - 2);
         test->setName(funName);
         addTestCase(test);
     }
+
+    test = new TestCase();
+    funName = "cleanupTestCase";
+    test->setName(funName);
+    test->setChecked(true);
+    addTestCase(test);
 }
 
 const int &TestManager::indexOfByFunName(const QString &fun) const

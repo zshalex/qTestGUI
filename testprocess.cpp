@@ -35,6 +35,14 @@ QStringList TestProcess::getArgs(TestManager &testManager)
 {
     QStringList arg;
     for (int i = 0; i < testManager.count(); i++) {
+        if (testManager.testCase(i)->name() == "initTestCase") {
+            testManager.testCase(i)->setChecked(true);
+            continue;
+        }
+        if (testManager.testCase(i)->name() == "cleanupTestCase") {
+            testManager.testCase(i)->setChecked(true);
+            continue;
+        }
         if (testManager.testCase(i)->checked())
             arg << testManager.testCase(i)->name();
         testManager.testCase(i)->message().clear();

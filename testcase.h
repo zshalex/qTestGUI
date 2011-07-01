@@ -9,6 +9,9 @@ class TestCase
 public:
     TestCase();
 
+    const static QString INIT_TEST_CASE;
+    const static QString CLEAN_TEST_CASE;
+
     const QString &name() const {return _name;}
     const QString &resultStr() const {return _resultStr;}
     const bool &result() const {return _result;}
@@ -28,6 +31,8 @@ public:
     void setErrorFile(const QString &value);
     void setExecuted(const bool &value);
     void setChecked(const bool &value);
+
+    bool isInitOrClean();
 private:
     QString _name;
     QString _resultStr;

@@ -82,10 +82,14 @@ void MainWindow::getFunListFinished(const QStringList &result)
         treeItem->setText(0,_testManager.testCase(i)->name());
         treeItem->setIcon(0,QIcon(":/image/normal.png"));
         _testManager.testCase(i)->setExecuted(false);
-        if (_testManager.testCase(i)->checked())
-            treeItem->setCheckState(0,Qt::Checked);
-        else
-            treeItem->setCheckState(0,Qt::Unchecked);
+//        if (_testManager.testCase(i)->isInitOrClean()) {
+////            treeItem->setCheckState(0,Qt::PartiallyChecked);
+//        } else {
+            if (_testManager.testCase(i)->checked())
+                treeItem->setCheckState(0,Qt::Checked);
+            else
+                treeItem->setCheckState(0,Qt::Unchecked);
+//        }
     }
     _treeRoot->setExpanded(true);
 
