@@ -7,6 +7,11 @@ namespace Ui {
     class OptionDialog;
 }
 
+///参数配置对话框
+/**
+  暂时未使用
+  */
+
 class OptionDialog : public QDialog
 {
     Q_OBJECT
